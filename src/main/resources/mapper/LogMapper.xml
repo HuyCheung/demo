@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Log">
+    <!--@mbg.generated-->
+    <!--@Table `sys_log`-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="operate_type" jdbcType="VARCHAR" property="operateType" />
+    <result column="operate_account" jdbcType="VARCHAR" property="operateAccount" />
+    <result column="operate_username" jdbcType="VARCHAR" property="operateUsername" />
+    <result column="operate_content" jdbcType="VARCHAR" property="operateContent" />
+    <result column="operate_ip" jdbcType="INTEGER" property="operateIp" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `id`, `operate_type`, `operate_account`, `operate_username`, `operate_content`, `operate_ip`, 
+    `create_time`, `update_time`
+  </sql>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update `sys_log`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`operate_type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.operateType != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.operateType,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`operate_account` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.operateAccount != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.operateAccount,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`operate_username` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.operateUsername != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.operateUsername,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`operate_content` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.operateContent != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.operateContent,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`operate_ip` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.operateIp != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.operateIp,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`create_time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`update_time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where `id` in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.example.demo.entity.Log" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `sys_log`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      `operate_type`,
+      `operate_account`,
+      `operate_username`,
+      `operate_content`,
+      `operate_ip`,
+      `create_time`,
+      `update_time`,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{operateType,jdbcType=VARCHAR},
+      #{operateAccount,jdbcType=VARCHAR},
+      #{operateUsername,jdbcType=VARCHAR},
+      #{operateContent,jdbcType=VARCHAR},
+      #{operateIp,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        `id` = #{id,jdbcType=BIGINT},
+      </if>
+      `operate_type` = #{operateType,jdbcType=VARCHAR},
+      `operate_account` = #{operateAccount,jdbcType=VARCHAR},
+      `operate_username` = #{operateUsername,jdbcType=VARCHAR},
+      `operate_content` = #{operateContent,jdbcType=VARCHAR},
+      `operate_ip` = #{operateIp,jdbcType=INTEGER},
+      `create_time` = #{createTime,jdbcType=TIMESTAMP},
+      `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.example.demo.entity.Log" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `sys_log`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="operateType != null">
+        `operate_type`,
+      </if>
+      <if test="operateAccount != null">
+        `operate_account`,
+      </if>
+      <if test="operateUsername != null">
+        `operate_username`,
+      </if>
+      <if test="operateContent != null">
+        `operate_content`,
+      </if>
+      <if test="operateIp != null">
+        `operate_ip`,
+      </if>
+      <if test="createTime != null">
+        `create_time`,
+      </if>
+      <if test="updateTime != null">
+        `update_time`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateAccount != null">
+        #{operateAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUsername != null">
+        #{operateUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="operateContent != null">
+        #{operateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operateIp != null">
+        #{operateIp,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        `id` = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="operateType != null">
+        `operate_type` = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateAccount != null">
+        `operate_account` = #{operateAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="operateUsername != null">
+        `operate_username` = #{operateUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="operateContent != null">
+        `operate_content` = #{operateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operateIp != null">
+        `operate_ip` = #{operateIp,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        `create_time` = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

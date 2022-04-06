@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: demo
+  datasource:
+    url: jdbc:mysql://sh-cynosdbmysql-grp-4r9m8zsi.sql.tencentcdb.com:25180/demo?useUnicode=true
+    username: ENC(+p08zhb0s3l/tuuWvfgCgkfhkFXb/EzExGGUfH4lkA/UR1eYbBgf0xxx9FLtuPs2)
+    password: ENC(8nlDYlws/iMlRGmW7USpRvnqsDqZ0XwfmtClVNi+q2hNg2zsHjR0lXz+HcOi1fUC)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 30000
+      max-lifetime: 180000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  # 这个mvc的配置是springboot2.6.1不支持swagger3的折衷配置，后面考虑升级Springboot版本或降级版本
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+server:
+  shutdown: graceful
+  port: 8080
+# 打印调用参数和时间
+tlog:
+  enable-invoke-time-print: true
+# Sa-Token配置
+sa-token:
+  # token名称 (同时也是cookie名称)
+  token-name: satoken
+  # token有效期，单位s 默认30天, -1代表永不过期
+  timeout: 2592000
+  # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+  activity-timeout: -1
+  # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+  is-share: false
+  # token风格
+  token-style: simple-uuid
+  # 是否输出操作日志
+  is-log: false
+  # 是否在初始化配置时打印版本字符画
+  is-print: false
+mybatis-plus:
+  type-aliases-package: com.example.demo.mapper
+  configuration:
+    auto-mapping-unknown-column-behavior: warning
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+    db-config:
+      logic-delete-field: status # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 0 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
+      table-prefix: sys

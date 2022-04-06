@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.RoleAclMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.RoleAcl">
+    <!--@mbg.generated-->
+    <!--@Table `sys_role_acl`-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="acl_code" jdbcType="VARCHAR" property="aclCode" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `id`, `role_code`, `acl_code`, `create_time`, `update_time`
+  </sql>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update `sys_role_acl`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`role_code` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.roleCode != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.roleCode,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`acl_code` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.aclCode != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.aclCode,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`create_time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`update_time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where `id` in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.example.demo.entity.RoleAcl" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `sys_role_acl`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      `role_code`,
+      `acl_code`,
+      `create_time`,
+      `update_time`,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{roleCode,jdbcType=VARCHAR},
+      #{aclCode,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        `id` = #{id,jdbcType=BIGINT},
+      </if>
+      `role_code` = #{roleCode,jdbcType=VARCHAR},
+      `acl_code` = #{aclCode,jdbcType=VARCHAR},
+      `create_time` = #{createTime,jdbcType=TIMESTAMP},
+      `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.example.demo.entity.RoleAcl" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `sys_role_acl`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="roleCode != null">
+        `role_code`,
+      </if>
+      <if test="aclCode != null">
+        `acl_code`,
+      </if>
+      <if test="createTime != null">
+        `create_time`,
+      </if>
+      <if test="updateTime != null">
+        `update_time`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclCode != null">
+        #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        `id` = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleCode != null">
+        `role_code` = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="aclCode != null">
+        `acl_code` = #{aclCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        `create_time` = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

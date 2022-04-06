@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.User">
+    <!--@mbg.generated-->
+    <!--@Table `sys_user`-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    `id`, `account`, `username`, `real_name`, `email`, `phone`, `birthday`, `password`, 
+    `status`, `remark`, `create_time`, `update_time`
+  </sql>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update `sys_user`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`account` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.account != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.account,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`username` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.username != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.username,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`real_name` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.realName != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.realName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`email` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.email != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.email,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`phone` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.phone != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.phone,jdbcType=CHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`birthday` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.birthday != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.birthday,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`password` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.password != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.password,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.status,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`remark` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.remark != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.remark,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`create_time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`update_time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when `id` = #{item.id,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where `id` in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.example.demo.entity.User" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `sys_user`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      `account`,
+      `username`,
+      `real_name`,
+      `email`,
+      `phone`,
+      `birthday`,
+      `password`,
+      `status`,
+      `remark`,
+      `create_time`,
+      `update_time`,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      #{account,jdbcType=VARCHAR},
+      #{username,jdbcType=VARCHAR},
+      #{realName,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},
+      #{phone,jdbcType=CHAR},
+      #{birthday,jdbcType=TIMESTAMP},
+      #{password,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT},
+      #{remark,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        `id` = #{id,jdbcType=BIGINT},
+      </if>
+      `account` = #{account,jdbcType=VARCHAR},
+      `username` = #{username,jdbcType=VARCHAR},
+      `real_name` = #{realName,jdbcType=VARCHAR},
+      `email` = #{email,jdbcType=VARCHAR},
+      `phone` = #{phone,jdbcType=CHAR},
+      `birthday` = #{birthday,jdbcType=TIMESTAMP},
+      `password` = #{password,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      `remark` = #{remark,jdbcType=VARCHAR},
+      `create_time` = #{createTime,jdbcType=TIMESTAMP},
+      `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.example.demo.entity.User" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `sys_user`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        `id`,
+      </if>
+      <if test="account != null">
+        `account`,
+      </if>
+      <if test="username != null">
+        `username`,
+      </if>
+      <if test="realName != null">
+        `real_name`,
+      </if>
+      <if test="email != null">
+        `email`,
+      </if>
+      <if test="phone != null">
+        `phone`,
+      </if>
+      <if test="birthday != null">
+        `birthday`,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        `remark`,
+      </if>
+      <if test="createTime != null">
+        `create_time`,
+      </if>
+      <if test="updateTime != null">
+        `update_time`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        `id` = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="account != null">
+        `account` = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        `username` = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        `real_name` = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        `email` = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        `phone` = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null">
+        `birthday` = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        `remark` = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        `create_time` = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        `update_time` = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
