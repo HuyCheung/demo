@@ -17,6 +17,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  main:
+    # 应用程序运行时用于显示Banner的模式：console，将标志输出到控制台，默认值；log，将标志输出到日志；off：关闭标志输出。
+    banner-mode: console
 server:
   shutdown: graceful
   port: 8080

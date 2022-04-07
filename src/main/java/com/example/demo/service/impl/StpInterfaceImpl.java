@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.service.impl;
 
 import cn.dev33.satoken.stp.StpInterface;
 import com.example.demo.cache.UserCache;
@@ -11,11 +11,13 @@ import java.util.List;
 
 /**
  * 自定义权限验证接口扩展
+ * <p>
+ * 完成Sa-Token的自定义权限验证扩展
  *
  * @author Huy Cheung
  * @date 2022/03/15
  */
-@Component    // 保证此类被SpringBoot扫描，完成Sa-Token的自定义权限验证扩展 
+@Component
 public class StpInterfaceImpl implements StpInterface {
     @Resource
     private UserCache userCache;

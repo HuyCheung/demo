@@ -23,7 +23,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Validated
 @RestController
-@RequestMapping("/user")
+@RequestMapping("user")
 public class LoginController {
 
     @Value("${jasypt.encryptor.password}")

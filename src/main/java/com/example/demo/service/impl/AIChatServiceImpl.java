@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.api.AIChatApi;
-import com.example.demo.entity.api.response.AIChatResponse;
+import com.example.demo.entity.api.AIChatResponse;
 import com.example.demo.service.AIChatService;
 import com.google.common.base.Strings;
 import org.springframework.stereotype.Service;

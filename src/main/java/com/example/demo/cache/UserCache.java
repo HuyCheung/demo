@@ -1,6 +1,6 @@
 package com.example.demo.cache;
 
-import com.example.demo.constant.Status;
+import com.example.demo.constant.StatusConsts;
 import com.example.demo.entity.RoleAcl;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserAcl;
@@ -78,7 +78,7 @@ public class UserCache {
                     log.info("load user info from db!account:{}", account);
                     // 获取用户基础信息
                     User user = userService.lambdaQuery()
-                            .eq(User::getStatus, Status.NORMAL)
+                            .eq(User::getStatus, StatusConsts.NORMAL)
                             .eq(User::getAccount, account)
                             .one();
                     if (Objects.isNull(user)) {

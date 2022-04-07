@@ -1,4 +1,4 @@
-package com.example.demo.handle;
+package com.example.demo.handler;
 
 import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.util.SaResult;

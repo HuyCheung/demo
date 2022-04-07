@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.demo.constant.Status;
+import com.example.demo.constant.StatusConsts;
 import com.example.demo.entity.User;
 import com.example.demo.entity.query.PageQuery;
 import com.example.demo.exception.CustomException;
@@ -88,7 +88,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Transactional(rollbackFor = Exception.class)
     public Boolean batchEnable(List<Long> ids, Boolean enable) {
         User user = new User();
-        user.setStatus(Status.NORMAL);
+        user.setStatus(StatusConsts.NORMAL);
         userMapper.update(user, new UpdateWrapper<User>().lambda().in(User::getId, ids));
         return true;
     }
@@ -98,7 +98,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String keyword = pageQuery.getKeyword();
         int pageNum = Objects.isNull(pageQuery.getPageNum()) ? 1 : pageQuery.getPageNum();
         int pageSize = Objects.isNull(pageQuery.getPageSize()) ? 10 : pageQuery.getPageSize();
-        LambdaQueryWrapper<User> queryLambda = new QueryWrapper<User>().lambda().ne(User::getStatus, Status.DELETE);
+        LambdaQueryWrapper<User> queryLambda = new QueryWrapper<User>().lambda().ne(User::getStatus, StatusConsts.DELETE);
         if (StringUtils.hasText(keyword)) {
             queryLambda.and(wrapper -> {
                 wrapper.eq(User::getAccount, "%" + keyword + "%").or()
@@ -118,7 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User get(Long id) {
         User user = userMapper.selectOne(new QueryWrapper<User>().lambda()
-                .eq(User::getId, id).ne(User::getStatus, Status.DELETE));
+                .eq(User::getId, id).ne(User::getStatus, StatusConsts.DELETE));
         user.setPassword(null);
         return user;
     }
@@ -137,9 +137,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         Byte status = user.getStatus();
         switch (status) {
-            case Status.DELETE:
+            case StatusConsts.DELETE:
                 return ResultResponse.fail(ReturnCode.Default.USER_EXPIRE);
-            case Status.FREEZE:
+            case StatusConsts.FREEZE:
                 return ResultResponse.fail(ReturnCode.Default.USER_LOCKED);
             default:
                 StpUtil.login(account);

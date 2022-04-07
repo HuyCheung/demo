@@ -1,7 +1,7 @@
 package com.example.demo.api;
 
 import com.ejlchina.okhttps.OkHttps;
-import com.example.demo.entity.api.response.AIChatResponse;
+import com.example.demo.entity.api.AIChatResponse;
 
 /**
  * 人工智能聊天 api

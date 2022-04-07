@@ -1,6 +1,12 @@
 package com.example.demo.constant;
 
-public interface Status {
+/**
+ * 状态常量
+ *
+ * @author Huy Cheung
+ * @date 2022/04/07
+ */
+public interface StatusConsts {
     /**
      * 删除
      */

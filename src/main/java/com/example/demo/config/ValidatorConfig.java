@@ -17,6 +17,13 @@ import javax.validation.Validator;
 @Configuration
 public class ValidatorConfig {
 
+    /**
+     * 验证器
+     * <p>
+     * 当校验到第一个错误就停止继续校验
+     *
+     * @return {@link Validator}
+     */
     @Bean
     public Validator validator() {
         return Validation.byProvider(HibernateValidator.class).configure().failFast(true).buildValidatorFactory().getValidator();
