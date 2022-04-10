@@ -100,13 +100,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         int pageSize = Objects.isNull(pageQuery.getPageSize()) ? 10 : pageQuery.getPageSize();
         LambdaQueryWrapper<User> queryLambda = new QueryWrapper<User>().lambda().ne(User::getStatus, StatusConsts.DELETE);
         if (StringUtils.hasText(keyword)) {
-            queryLambda.and(wrapper -> {
-                wrapper.eq(User::getAccount, "%" + keyword + "%").or()
-                        .eq(User::getUsername, "%" + keyword + "%").or()
-                        .eq(User::getRealName, "%" + keyword + "%").or()
-                        .eq(User::getEmail, "%" + keyword + "%").or()
-                        .eq(User::getPhone, "%" + keyword + "%");
-            });
+            queryLambda.and(wrapper -> wrapper.eq(User::getAccount, "%" + keyword + "%").or()
+                    .eq(User::getUsername, "%" + keyword + "%").or()
+                    .eq(User::getRealName, "%" + keyword + "%").or()
+                    .eq(User::getEmail, "%" + keyword + "%").or()
+                    .eq(User::getPhone, "%" + keyword + "%"));
         }
         Page<User> userPage = userMapper.selectPage(new Page<>(pageNum, pageSize), queryLambda);
         for (User record : userPage.getRecords()) {

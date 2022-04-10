@@ -1,5 +1,8 @@
 package com.example.demo.socket;
 
+import com.ejlchina.json.JSONKit;
+import com.example.demo.socket.entity.SocketRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -13,9 +16,15 @@ import java.io.IOException;
  * @author Huy Cheung
  * @date 2022/04/07
  */
+@Slf4j
 @Component
 @ServerEndpoint("/ws/{sessionId}")
 public class WebSocketEndpoint {
+
+    /**
+     * 会话id
+     */
+    private String sessionId;
 
     /**
      * 连接成功
@@ -27,7 +36,8 @@ public class WebSocketEndpoint {
      */
     @OnOpen
     public void onOpen(Session session, @PathParam("sessionId") String sessionId) {
-        System.out.println(sessionId + "连接成功");
+        log.info("{} 连接成功", sessionId);
+        this.sessionId = sessionId;
     }
 
     /**
@@ -39,7 +49,7 @@ public class WebSocketEndpoint {
      */
     @OnClose
     public void onClose(Session session) {
-        System.out.println("连接关闭");
+        log.info("{} 连接关闭", sessionId);
     }
 
     /**
@@ -52,7 +62,10 @@ public class WebSocketEndpoint {
      */
     @OnMessage
     public String onMessage(String message) throws IOException {
-        return "servet 发送：" + message;
+        log.info("收到 {} 会话消息,报文:{}", sessionId, message);
+        SocketRequest request = JSONKit.toBean(SocketRequest.class, message);
+
+        return null;
     }
 
     /**
@@ -64,7 +77,6 @@ public class WebSocketEndpoint {
      */
     @OnError
     public void onError(Session session, Throwable t) {
-        System.out.println("连接出现异常");
-        t.printStackTrace();
+        log.error("{} 连接出现异常", sessionId, t);
     }
 }
