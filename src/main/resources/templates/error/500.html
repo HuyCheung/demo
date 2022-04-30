@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>服务器出错</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <link rel="stylesheet" th:href="@{/layui/css/error.css}"/>
+    <meta http-equiv="refresh" content="5;url='/index'">
+</head>
+<body>
+<div class="content">
+    <img th:src="@{/layui/images/500.svg}" alt="">
+    <div class="content-r">
+        <h1>500</h1>
+        <p>抱歉，服务器出错了</p>
+        <a href="/index">
+            <button class="layui-btn layui-btn-primary">返回首页</button>
+        </a>
+    </div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+</body>
+</html>
