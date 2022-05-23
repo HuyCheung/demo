@@ -1,8 +1,8 @@
 package com.example.demo.socket.entity;
 
-import com.ejlchina.json.JSONKit;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -12,8 +12,9 @@ import java.time.LocalDateTime;
  * @author Huy Cheung
  * @date 2022/04/08
  */
-@Setter
 @Getter
+@Setter
+@Accessors(chain = true)
 public class SocketResponse {
     /**
      * 发送者
@@ -36,8 +37,4 @@ public class SocketResponse {
      */
     private String content;
 
-    @Override
-    public String toString() {
-        return JSONKit.toJson(this);
-    }
 }

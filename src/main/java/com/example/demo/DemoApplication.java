@@ -8,6 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
+/**
+ * 演示应用程序
+ *
+ * @author Huy Cheung
+ * @date 2022/05/20
+ */
 @SpringBootApplication
 @MapperScan("com.example.demo.mapper")
 public class DemoApplication {

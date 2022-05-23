@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.AuthCustomizeMapper">
+    <!-- 查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.demo.dto.AuthUserDTO">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="avatar" property="avatar"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="sex" property="sex"/>
+        <result column="status" property="status"/>
+        <result column="create_where" property="createWhere"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <collection property="roles" ofType="com.example.demo.dto.AuthRoleDTO">
+            <id column="ar_id" property="id"/>
+            <result column="ar_name" property="name"/>
+            <result column="ar_code" property="code"/>
+            <result column="ar_description" property="description"/>
+        </collection>
+        <collection property="resources" ofType="com.example.demo.dto.AuthResourceDTO">
+            <id column="ar2_id" property="id"/>
+            <result column="ar2_name" property="name"/>
+            <result column="ar2_code" property="code"/>
+            <result column="ar2_type" property="type"/>
+            <result column="ar2_status" property="status"/>
+            <result column="ar2_description" property="description"/>
+        </collection>
+    </resultMap>
+
+    <select id="authUserInfo" resultMap="BaseResultMap">
+        select au.id,
+               au.username,
+               au.avatar,
+               au.phone,
+               au.email,
+               au.sex,
+               au.status,
+               au.create_where,
+               au.create_time,
+               au.update_time,
+               ar.id           ar_id,
+               ar.name         ar_name,
+               ar.code         ar_code,
+               ar.description  ar_description,
+               ar2.id          ar2_id,
+               ar2.name        ar2_name,
+               ar2.code        ar2_code,
+               ar2.type        ar2_type,
+               ar2.status      ar2_status,
+               ar2.description ar2_description
+        from auth_user au
+                 left join auth_user_role_bind aurb on au.id = aurb.user_id
+                 left join auth_role ar on aurb.role_id = ar.id
+                 left join auth_role_resource_bind arrb on ar.id = arrb.role_id
+                 left join auth_resource ar2 on arrb.resource_id = ar2.id
+        where au.id = #{userId}
+          and ar.status = 1
+    </select>
+</mapper>

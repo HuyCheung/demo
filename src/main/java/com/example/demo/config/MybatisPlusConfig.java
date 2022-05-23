@@ -7,6 +7,12 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * mybatis plus 配置
+ *
+ * @author Huy Cheung
+ * @date 2022/05/21
+ */
 @Configuration
 public class MybatisPlusConfig {
 
@@ -24,7 +30,8 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(paginationInnerInterceptor);
         // 针对 update 和 delete 语句 作用: 阻止恶意的全表更新删除
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+        // sql 性能规范
+        // interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
         return interceptor;
     }
-
 }

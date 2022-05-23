@@ -53,10 +53,10 @@ public class FastJsonMessageConverterConfig {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig config = new FastJsonConfig();
         config.setSerializerFeatures(
-                // 将List类型的null转成[]
                 SerializerFeature.WriteNullListAsEmpty,
                 SerializerFeature.WriteDateUseDateFormat,
-                // 避免循环引用
+                // 枚举toString
+                SerializerFeature.WriteEnumUsingToString,
                 SerializerFeature.DisableCircularReferenceDetect);
 
         converter.setFastJsonConfig(config);

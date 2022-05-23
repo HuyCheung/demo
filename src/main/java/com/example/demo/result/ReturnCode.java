@@ -54,8 +54,9 @@ public interface ReturnCode {
         USER_NOT_EXIST(104001, "用户不存在"),
         USER_PASSWORD_INCORRECT(104002, "用户密码不正确"),
         USER_LOCKED(104003, "用户被锁定"),
-        USER_EXPIRE(104004, "用户已过期"),
-        USER_ARREARS(104005, "用户已欠费"),
+        USER_DELETED(104004, "用户已禁用"),
+        USER_ILLEGAL(104005, "非法用户"),
+        USER_VERIFICATION_FAILED(104006, "验证失败"),
 
         /* ------------------105xxx 账户相关的错误--------------------------- */
         ACCOUNT_NOT_EXIST(105001, "账户不存在"),

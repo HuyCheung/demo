@@ -1,10 +1,14 @@
 package com.example.demo.service.impl;
 
 import cn.dev33.satoken.stp.StpInterface;
-import com.example.demo.cache.UserCache;
-import com.example.demo.entity.dto.UserDTO;
+import com.example.demo.cache.AuthUserCache;
+import com.example.demo.dto.AuthResourceDTO;
+import com.example.demo.dto.AuthRoleDTO;
+import com.example.demo.dto.AuthUserDTO;
+import com.google.common.collect.Lists;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +24,7 @@ import java.util.List;
 @Component
 public class StpInterfaceImpl implements StpInterface {
     @Resource
-    private UserCache userCache;
+    private AuthUserCache authUserCache;
 
     /**
      * 返回一个账号所拥有的权限码集合
@@ -28,8 +32,12 @@ public class StpInterfaceImpl implements StpInterface {
     @SneakyThrows
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        UserDTO user = userCache.getUser((String) loginId);
-        return user.getAclList();
+        AuthUserDTO user = authUserCache.getUser((Long) loginId);
+        List<AuthResourceDTO> resources = user.getResources();
+        if (CollectionUtils.isEmpty(resources)) {
+            return Lists.newArrayList();
+        }
+        return resources.stream().map(AuthResourceDTO::getCode).toList();
     }
 
     /**
@@ -38,8 +46,12 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     @SneakyThrows
     public List<String> getRoleList(Object loginId, String loginType) {
-        UserDTO user = userCache.getUser((String) loginId);
-        return user.getRoles();
+        AuthUserDTO user = authUserCache.getUser((Long) loginId);
+        List<AuthRoleDTO> roles = user.getRoles();
+        if (CollectionUtils.isEmpty(roles)) {
+            return Lists.newArrayList();
+        }
+        return roles.stream().map(AuthRoleDTO::getCode).toList();
     }
 
 }

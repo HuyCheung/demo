@@ -2,7 +2,7 @@ package com.example.demo.handler;
 
 import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.util.SaResult;
-import com.example.demo.exception.CustomException;
+import com.example.demo.exception.CustomizeException;
 import com.example.demo.result.ResultResponse;
 import com.example.demo.result.ReturnCode;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +62,7 @@ public class GlobalExceptionHandler {
             return ResultResponse.fail("无此角色：" + ee.getRole());
         } else if (e instanceof NotPermissionException ee) {
             // 如果是权限异常
-            return ResultResponse.fail("无此权限：" + ee.getCode());
+            return ResultResponse.fail("无此权限：" + ee.getPermission());
         } else if (e instanceof DisableLoginException ee) {
             // 如果是被封禁异常
             return ResultResponse.fail("账号被封禁：" + ee.getDisableTime() + "秒后解封");
@@ -97,10 +97,10 @@ public class GlobalExceptionHandler {
     /**
      * -------- 自定义定异常处理方法 --------
      */
-    @ExceptionHandler(CustomException.class)
+    @ExceptionHandler(CustomizeException.class)
     @ResponseBody
-    public ResultResponse<Void> error(CustomException e) {
+    public ResultResponse<Void> error(CustomizeException e) {
         e.printStackTrace();
-        return ResultResponse.fail(e.getMessage());
+        return ResultResponse.fail(e.getCode(), e.getMessage());
     }
 }

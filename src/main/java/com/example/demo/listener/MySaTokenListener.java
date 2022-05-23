@@ -12,8 +12,8 @@ public class MySaTokenListener implements SaTokenListener {
 
     /** 每次登录时触发 */
     @Override
-    public void doLogin(String loginType, Object loginId, SaLoginModel loginModel) {
-        // ... 
+    public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+
     }
 
     /** 每次注销时触发 */

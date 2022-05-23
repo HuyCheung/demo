@@ -1,10 +1,9 @@
 package com.example.demo.socket;
 
-import com.example.demo.entity.dto.UserDTO;
-import lombok.AllArgsConstructor;
+import com.example.demo.dto.AuthUserDTO;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.websocket.Session;
@@ -85,13 +84,13 @@ public class WsSessionManager {
     /**
      * 初始化连接
      *
-     * @param sessionId 会话id
-     * @param session   会话
-     * @param userInfo  用户信息
+     * @param sessionId   会话id
+     * @param session     会话
+     * @param authUserDTO 用户信息
      */
-    public static void initConnect(String sessionId, Session session, UserDTO userInfo) {
-        socketInfoPool.put(sessionId, new SocketInfo(sessionId, System.currentTimeMillis(), userInfo));
-        initSocketInfo(sessionId, userInfo);
+    public static void initConnect(String sessionId, Session session, AuthUserDTO authUserDTO) {
+        socketInfoPool.put(sessionId, new SocketInfo().setSessionId(sessionId).setLastComTime(System.currentTimeMillis()).setAuthUserDTO(authUserDTO));
+        initSocketInfo(sessionId, authUserDTO);
     }
 
     /**
@@ -119,21 +118,21 @@ public class WsSessionManager {
     /**
      * 初始化连接信息
      *
-     * @param sessionId 会话id
-     * @param userInfo  用户信息
+     * @param sessionId   会话id
+     * @param authUserDTO 用户信息
      */
-    public static void initSocketInfo(String sessionId, UserDTO userInfo) {
-        socketInfoPool.put(sessionId, new SocketInfo(sessionId, System.currentTimeMillis(), userInfo));
+    public static void initSocketInfo(String sessionId, AuthUserDTO authUserDTO) {
+        socketInfoPool.put(sessionId, new SocketInfo().setSessionId(sessionId).setLastComTime(System.currentTimeMillis()).setAuthUserDTO(authUserDTO));
     }
 
     /**
      * 获取用户信息
      *
      * @param sessionId 会话id
-     * @return {@link UserDTO}
+     * @return {@link AuthUserDTO}
      */
-    public static UserDTO getUserInfo(String sessionId) {
-        return socketInfoPool.get(sessionId).getUserInfo();
+    public static AuthUserDTO getUserInfo(String sessionId) {
+        return socketInfoPool.get(sessionId).getAuthUserDTO();
     }
 
     /**
@@ -164,8 +163,7 @@ public class WsSessionManager {
      */
     @Getter
     @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @Accessors(chain = true)
     public static class SocketInfo {
 
         /**
@@ -181,7 +179,7 @@ public class WsSessionManager {
         /**
          * 用户信息
          */
-        private UserDTO userInfo;
+        private AuthUserDTO authUserDTO;
 
     }
 }

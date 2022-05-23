@@ -1,6 +1,10 @@
 package com.example.demo.result;
 
 
+import io.swagger.annotations.ApiModel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.util.StringUtils;
 
 import java.io.Serial;
@@ -73,6 +77,10 @@ import java.util.Map;
  * @author <a href="https://www.fengwenyi.com">Erwin Feng</a>
  * @since 2.5.0
  */
+@Getter
+@Setter
+@Accessors(chain = true)
+@ApiModel(value = "接口响应封装", description = "接口响应模板")
 public class ResultResponse<T> implements Serializable {
 
     @Serial
@@ -106,7 +114,7 @@ public class ResultResponse<T> implements Serializable {
     /**
      * 响应体
      */
-    private T body;
+    private T data;
 
     /**
      * 构造方法：无参数
@@ -131,6 +139,20 @@ public class ResultResponse<T> implements Serializable {
     /**
      * 操作成功
      *
+     * @param <T> {@link Void}
+     * @return 响应封装类 {@link ResultResponse}
+     */
+    public static <T> ResultResponse<T> success(String message) {
+        return new ResultResponse<T>()
+                .setSuccess(Boolean.TRUE)
+                .setCode(SUCCESS.getCode())
+                .setMessage(message)
+                ;
+    }
+
+    /**
+     * 操作成功
+     *
      * @param body 响应体
      * @param <T>  响应体类型
      * @return 响应封装类 {@link ResultResponse}
@@ -140,7 +162,7 @@ public class ResultResponse<T> implements Serializable {
                 .setSuccess(Boolean.TRUE)
                 .setCode(SUCCESS.getCode())
                 .setMessage(SUCCESS.getMessage())
-                .setBody(body)
+                .setData(body)
                 ;
     }
 
@@ -218,96 +240,5 @@ public class ResultResponse<T> implements Serializable {
                 .setCode(code)
                 .setMessage(message)
                 ;
-    }
-
-    /**
-     * {@code code} 的get方法
-     *
-     * @return {@code code} 的值
-     */
-    public int getCode() {
-        return code;
-    }
-
-    /**
-     * {@code code} 的get方法
-     *
-     * @param code 响应码
-     * @return {@link ResultResponse}
-     */
-    private ResultResponse<T> setCode(int code) {
-        this.code = code;
-        return this;
-    }
-
-    /**
-     * {@code message} 的get方法
-     *
-     * @return {@code message} 的值
-     */
-    public String getMessage() {
-        return message;
-    }
-
-    /**
-     * {@code msg} 的get方法
-     *
-     * @param message 信息
-     * @return {@link ResultResponse}
-     */
-    public ResultResponse<T> setMessage(String message) {
-        this.message = message;
-        return this;
-    }
-
-    /**
-     * {@code success} 的get方法
-     *
-     * @return {@code success} 的值
-     */
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    /**
-     * {@code success} 的get方法
-     *
-     * @param success 操作结果
-     * @return {@link ResultResponse}
-     */
-    public ResultResponse<T> setSuccess(Boolean success) {
-        this.success = success;
-        return this;
-    }
-
-
-    /**
-     * {@code body} 的get方法
-     *
-     * @return {@code body} 的值
-     */
-    public T getBody() {
-        return body;
-    }
-
-    /**
-     * {@code body} 的set方法
-     *
-     * @param body 响应体
-     * @return {@link ResultResponse}
-     */
-    public ResultResponse<T> setBody(T body) {
-        this.body = body;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return "ResultTemplate{" +
-                "code=" + code +
-                ", message='" + message + '\'' +
-                ", success=" + success +
-                ", body=" + body +
-                '}';
     }
 }

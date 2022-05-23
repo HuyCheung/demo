@@ -1,6 +1,6 @@
 package com.example.demo.socket;
 
-import com.ejlchina.json.JSONKit;
+import com.alibaba.fastjson2.JSON;
 import com.example.demo.socket.entity.SocketRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -63,7 +63,7 @@ public class WebSocketEndpoint {
     @OnMessage
     public String onMessage(String message) throws IOException {
         log.info("收到 {} 会话消息,报文:{}", sessionId, message);
-        SocketRequest request = JSONKit.toBean(SocketRequest.class, message);
+        SocketRequest request = JSON.parseObject(message,SocketRequest.class);
 
         return null;
     }
