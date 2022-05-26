@@ -1,7 +1,11 @@
 package com.example.demo.api;
 
-import com.ejlchina.okhttps.OkHttps;
 import com.example.demo.entity.api.AIChatResponse;
+import com.example.demo.util.RestUtil;
+import org.springframework.http.ResponseEntity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 人工智能聊天 api
@@ -17,11 +21,11 @@ public interface AIChatApi {
      * @return {@link String}
      */
     static AIChatResponse chat(String msg) {
-        return OkHttps.async("http://api.qingyunke.com/api.php")
-                .addUrlPara("key", "free")
-                .addUrlPara("appid", 0)
-                .addUrlPara("msg", msg)
-                .get().getResult().getBody()
-                .toBean(AIChatResponse.class);
+        Map<String, Object> query = new HashMap<>(3);
+        query.put("key", "free");
+        query.put("appid", 0);
+        query.put("msg", msg);
+        ResponseEntity<AIChatResponse> response = RestUtil.get("http://api.qingyunke.com/api.php", AIChatResponse.class, query);
+        return response.getBody();
     }
 }

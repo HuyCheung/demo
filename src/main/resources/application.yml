@@ -13,10 +13,6 @@ spring:
       max-lifetime: 180000
       connection-timeout: 30000
       connection-test-query: SELECT 1
-  # 这个mvc的配置是springboot2.6.1不支持swagger3的折衷配置，后面考虑升级Springboot版本或降级版本
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   main:
     # 应用程序运行时用于显示Banner的模式：console，将标志输出到控制台，默认值；log，将标志输出到日志；off：关闭标志输出。
     banner-mode: console
@@ -25,12 +21,18 @@ spring:
     servlet:
       content-type: text/html
     cache: false
+  devtools:
+    add-properties: false
+    livereload:
+      enabled: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 server:
   shutdown: graceful
   port: 8080
-# 打印调用参数和时间
-tlog:
-  enable-invoke-time-print: true
+  servlet:
+    context-path: /${spring.application.name}
 # Sa-Token配置
 sa-token:
   # token名称 (同时也是cookie名称)
@@ -58,3 +60,6 @@ mybatis-plus:
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
   global-config:
     banner: false
+logging:
+  pattern:
+    dateformat: MM-dd HH:mm:ss

@@ -23,6 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResultResponse<Void> error(Exception e) {
+        log.error(e.getMessage());
         e.printStackTrace();
         // 通用异常结果
         return ResultResponse.fail(e.getMessage());
@@ -41,6 +42,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NullPointerException.class)
     @ResponseBody
     public ResultResponse<Void> error(NullPointerException e) {
+        log.error(e.getMessage());
         e.printStackTrace();
         return ResultResponse.fail(e.getMessage());
     }
@@ -54,6 +56,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SaTokenException.class)
     @ResponseBody
     public ResultResponse<Void> error(SaTokenException e) {
+        log.error(e.getMessage());
         if (e instanceof NotLoginException ee) {
             // 如果是未登录异常
             return ResultResponse.fail(ee.getMessage());
@@ -80,6 +83,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpClientErrorException.class)
     @ResponseBody
     public ResultResponse<Void> error(IndexOutOfBoundsException e) {
+        log.error(e.getMessage());
         e.printStackTrace();
         return ResultResponse.fail(ReturnCode.Default.SERVICE_CALL_EXCEPTION);
     }
@@ -90,7 +94,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseBody
     public ResultResponse<Void> error(ConstraintViolationException e) {
-        e.printStackTrace();
+        log.error(e.getMessage());
         return ResultResponse.fail(ReturnCode.Default.PARAM_VALIDATED, e.getMessage());
     }
 
@@ -100,6 +104,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomizeException.class)
     @ResponseBody
     public ResultResponse<Void> error(CustomizeException e) {
+        log.error(e.getMessage());
         e.printStackTrace();
         return ResultResponse.fail(e.getCode(), e.getMessage());
     }

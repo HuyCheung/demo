@@ -46,7 +46,7 @@ public class MyBatisPlusGenerator {
                             .serviceImpl("service.impl")// Service Impl 包名，默认值:service.impl
                             .mapper("mapper")// Mapper 包名，默认值:mapper
                             .xml("mapper.xml")// Mapper XML 包名，默认值:mapper.xml
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, projectPath + "/src/main/resources/mapper/")); // 路径配置信息
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, projectPath + "/src/main/resources/mapper/")); // 路径配置信息
                     // .controller("controller");// Controller 包名，默认值:controller
                 })
                 .strategyConfig(builder -> {
@@ -59,14 +59,14 @@ public class MyBatisPlusGenerator {
                             .enableTableFieldAnnotation()// 开启生成实体时生成字段注解,默认值:false
                             .enableActiveRecord()// 开启 ActiveRecord 模型,默认值:false
                             .naming(NamingStrategy.underline_to_camel)
-                            .columnNaming(NamingStrategy.underline_to_camel).fileOverride()
+                            .columnNaming(NamingStrategy.underline_to_camel)
                             .mapperBuilder().superClass(BaseMapper.class)// 设置父类
                             .enableMapperAnnotation()// 开启 @Mapper 注解,默认值:false
                             .enableBaseResultMap()// 启用 BaseResultMap 生成,默认值:false
-                            .enableBaseColumnList().fileOverride()// 启用 BaseColumnList,默认值:false
-                            .serviceBuilder().formatServiceFileName("%sService").fileOverride()
+                            .enableBaseColumnList()// 启用 BaseColumnList,默认值:false
+                            .serviceBuilder().formatServiceFileName("%sService")
                             .controllerBuilder().enableHyphenStyle()// 开启驼峰转连字符,默认值:false
-                            .enableRestStyle().fileOverride();// 开启生成@RestController 控制器,默认值:false
+                            .enableRestStyle();// 开启生成@RestController 控制器,默认值:false
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用 Freemarker 引擎模板
                 .templateConfig(builder -> {

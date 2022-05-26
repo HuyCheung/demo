@@ -1,12 +1,14 @@
 package com.example.demo;
 
-import com.example.demo.util.NetUtil;
-import lombok.SneakyThrows;
+import cn.hutool.core.net.NetUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.system.OsInfo;
+import cn.hutool.system.SystemUtil;
+import cn.hutool.system.UserInfo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Import;
 
 /**
  * 演示应用程序
@@ -16,23 +18,28 @@ import org.springframework.core.env.Environment;
  */
 @SpringBootApplication
 @MapperScan("com.example.demo.mapper")
+@Import(SpringUtil.class)
 public class DemoApplication {
 
-    @SneakyThrows
     public static void main(String[] args) {
-        ConfigurableApplicationContext application = SpringApplication.run(DemoApplication.class, args);
-        Environment env = application.getEnvironment();
-        String ip = NetUtil.getServerIp();
-        String port = env.getProperty("server.port");
-        port = port == null ? "8080" : port;
-        String path = env.getProperty("server.servlet.context-path");
-        path = path == null ? "" : path;
-        System.out.println("\n----------------------------------------------------------\n\t" +
-                "Application Demo is running! Access URLs:\n\t" +
-                "本地访问地址: \thttp://localhost:" + port + path + "/\n\t" +
-                "外部访问地址: \thttp://" + ip + ":" + port + path + "/\n\t" +
-                "Knife4j文档: \thttp://" + ip + ":" + port + path + "/doc.html\n" +
-                "----------------------------------------------------------\n");
+        SpringApplication.run(DemoApplication.class, args);
+        String applicationName = SpringUtil.getApplicationName();
+        UserInfo userInfo = SystemUtil.getUserInfo();
+        String ip = NetUtil.getLocalhostStr();
+        String port = SpringUtil.getProperty("server.port");
+        String path = SpringUtil.getProperty("server.servlet.context-path");
+        OsInfo osInfo = SystemUtil.getOsInfo();
+        System.out.printf("""
+                                                
+                        ------------------------------------------------------------------------------------------------
+                        \t😀 Hello %s, %s is running by %s! Access URLs:
+                        \t本地访问地址: \thttp://localhost:%s%s/
+                        \t外部访问地址: \thttp://%s:%s%s/
+                        \tKnife4j文档: \thttp://%s:%s%s/doc.html
+                        ------------------------------------------------------------------------------------------------
+                                                
+                        """,
+                userInfo.getName(), applicationName, osInfo.getName(), port, path, ip, port, path, ip, port, path);
     }
 
 }
